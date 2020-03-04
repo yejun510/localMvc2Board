@@ -32,7 +32,7 @@
 	<c:forEach items="${list}" var="dto">
 		<tr>
 		<td>${dto.num}</td>
-		<td>${dto.title}</td>
+		<td><a href="retrieve.do?num=${dto.num}">${dto.title}</a></td>
 		<td>${dto.author}</td>
 		<td>${dto.writeday}</td>
 		<td>${dto.readcnt}</td>
