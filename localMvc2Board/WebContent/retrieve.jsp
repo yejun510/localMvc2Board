@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-	function pewdUrl(mode) {
+	function pwdUrl(mode) {
 		document.frm.action = "pwdCheckui.do";
 		document.frm.method = "post";
 		document.frm.mode.value = mode;
@@ -15,7 +15,7 @@
 </script>
 </head>
 <body>
-	<h1>글 자세히 보가</h1>
+	<h1>글 자세히 보기</h1>
 	<form name="frm">
 		<input type="hidden" name="num" value="${retrieve.num}">
 		<input type="hidden" name="mode">
@@ -29,22 +29,25 @@
 		</colgroup>
 		<tr>
 			<td>글번호</td>
-			<td>${retrieve.num}<span>(조회수:$(retrieve.readcnt))</span></td>
+			<td>${retrieve.num}<span>(조회수:${retrieve.readcnt})</span></td>
 			<td>작성일</td>
 			<td>${retrieve.writeday}</td>
 		</tr>
+		
 		<tr>
 			<td>제목</td>
 			<td colspan="3">${retrieve.title}</td>
 		</tr>
+		
 		<tr>
-		<td>
+		
 			<td>작성자</td>
 			<td colspan="3">${retrieve.author}</td>
 		<tr>
 			<td>내용</td>
 			<td colspan="3">${retrieve.content}</td>
 		</tr>
+		
 	</table>
 	<div>
 	<a href="list.do">[글목록]</a>&nbsp;&nbsp;

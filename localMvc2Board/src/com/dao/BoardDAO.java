@@ -104,7 +104,7 @@ public class BoardDAO {
 		try {
 			con = dataFactory.getConnection();
 			StringBuffer query = new StringBuffer();
-			query.append("UPDATE board SET readcnt = readcnt + 1 ");
+			query.append("UPDATE board1 SET readcnt = readcnt + 1 ");
 			query.append("WHERE num=?");
 			pstmt = con.prepareStatement(query.toString());
 			pstmt.setInt(1, Integer.parseInt(_num));
@@ -134,7 +134,7 @@ public class BoardDAO {
 			StringBuffer query = new StringBuffer();
 			query.append("SELECT num, author, title, content, ");
 			query.append("writeday, readcnt, repRoot, repIndent, ");
-			query.append("repStep FROM board WHERE num=?");
+			query.append("repStep FROM board1 WHERE num=?");
 			pstmt = con.prepareStatement(query.toString());
 			pstmt.setInt(1, Integer.parseInt(_num));
 			rs = pstmt.executeQuery();
@@ -160,4 +160,68 @@ public class BoardDAO {
 		return data;
 	} // end retrieve
 	
+	public void update(BoardDTO dto) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = dataFactory.getConnection();
+			StringBuffer query = new StringBuffer();
+			query.append("update board1 set title = ?, author=?,");
+			query.append("content=?,passwd=? where num=?");
+			
+			pstmt = con.prepareStatement(query.toString());
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getAuthor());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setString(4, dto.getPasswd());
+			pstmt.setInt(5, dto.getNum());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt != null)pstmt.close();
+				if(con != null)con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}//end update
+	
+	
 }// end class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
