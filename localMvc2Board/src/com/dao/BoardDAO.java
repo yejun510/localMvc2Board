@@ -1,10 +1,13 @@
 package com.dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -160,6 +163,7 @@ public class BoardDAO {
 		return data;
 	} // end retrieve
 	
+	//글 수정하기
 	public void update(BoardDTO dto) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -188,40 +192,45 @@ public class BoardDAO {
 		}
 	}//end update
 	
-	
+	// 비밀번호 체크
+	public Map<String,String> pwdCheck(String _num,String _mode, String _passwd){
+		Map<String, String> map = new HashMap<String, String>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String pwdChk = null;
+		try {
+			con = dataFactory.getConnection();
+			String query = "SELECT passwd FROM board1 WHERE num=?";
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(_num));
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				pwdChk = rs.getString("passwd");
+			}
+			
+			if(pwdChk.equals(_passwd)) {
+				if(_mode.equals("update")) {
+					map.put("resultUrl","updateui.do");
+				}else if(_mode.equals("delete")) {
+					map.put("resultUrl","delete.do");
+				}
+			}else {
+				map.put("resultUrl","pwdCheckui.do");
+				map.put("resultMsg","비밀번호가 일치하지 않습니다.");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null)rs.close();
+				if(pstmt != null)pstmt.close();
+				if(con != null)con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return map;
+	}
 }// end class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,8 @@ import com.service.BoardCommand;
 import com.service.BoardListCommand;
 import com.service.BoardRetrieveCommand;
 import com.service.BoardWriteCommand;
+import com.service.BoardpwdCheckCommand;
+import com.service.BoardpwdCheckFormCommand;
 
 @WebServlet("*.do")
 public class BoardFrontController extends HttpServlet {
@@ -54,7 +57,49 @@ public class BoardFrontController extends HttpServlet {
 			command.execute(request, response);
 			nextPage = "retrieve.jsp";
 		}
+		
+		// 비밀번호 입력 화면
+		if (com.equals("/pwdCheckui.do")) {
+			command = new BoardpwdCheckFormCommand();
+			command.execute(request, response);
+			nextPage = "passwdChk.jsp";
+		}
 
+		// 비밀번호 체크
+		if (com.equals("/pwdCheck.do")) {
+			command = new BoardpwdCheckCommand();
+			command.execute(request, response);
+			nextPage = (String)request.getAttribute("resultUrl");
+		}
+		
+		// 글 수정 화면 보기
+		if(com.equals("/updateui.do")) {
+			command = new BoardRetrieveCommand();
+			command.execute(request, response);
+			nextPage = "update.jsp";
+		}
+		
+		// 글 수정 하기
+		if(com.equals("/update.do")) {
+			command = new BoardUpdateCommand();
+			command.execute(request, response);
+			nextPage = "list.do";
+		}
+		
+		// 글 삭제 하기
+		if(com.equals("/delete.do")) {
+			command = new BoardDeleteCommand();
+			command.execute(request, response);
+			nextPage = "list.do";
+		}
+		
+		// 글 검색하기
+		if(com.equals("/search.do")) {
+			command = new BoardSearchCommand();
+			command.execute(request, response);
+			nextPage = "list.jsp";
+		}
+		
 		RequestDispatcher dis = request.getRequestDispatcher(nextPage);
 		dis.forward(request, response);
 

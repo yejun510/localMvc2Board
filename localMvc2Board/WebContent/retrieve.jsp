@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>글 자세히 보기</title>
 <script type="text/javascript">
 	function pwdUrl(mode) {
 		document.frm.action = "pwdCheckui.do";
