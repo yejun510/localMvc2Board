@@ -13,7 +13,6 @@
 			<colgroup>
 				<col width="250"></col>
 				<col width="350"></col>
-				
 			</colgroup>	
 			
 			<tr>
